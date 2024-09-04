@@ -5,5 +5,9 @@ branches:
 projects:
   AmazingSell:
     path: ""
+    libs:
+      - src: muqsit/InvMenu/InvMenu
+      - src: CortexPE/Commando/Commando
+        
   
 ...
