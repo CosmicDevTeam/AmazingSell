@@ -1,0 +1,11 @@
+error-item-hand: "&4You must have a item in hand"
+error-not-saleable: "&4This item is not saleable"
+error-already-registered: "&4The item {ITEM} is already registered, edit it instead"
+
+invalids-arguments-create: "&4Intenta usando /sell create (price)"
+invalids-arguments-delete: "&4Intenta usand0 /sell delete (identifier)"
+
+success-item-deleted: "&aThe item {ITEM} was deleted succesfully"
+success-item-selled: "&aYou selled the item {ITEM} x {COUNT} , added money {MONEY}"
+success-item-created: "&aItem {ITEM} created with price {PRICE}"
+success-saleable-edited: "&aItem {ITEM} edited and the new price is {PRICE}"
