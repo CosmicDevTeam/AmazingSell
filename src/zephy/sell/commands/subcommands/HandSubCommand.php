@@ -6,12 +6,11 @@ use CortexPE\Commando\BaseSubCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\item\VanillaItems;
 use pocketmine\player\Player;
-use zephy\menu\utils\SoundUtils;
+use zephy\sell\utils\SoundUtils;
 use zephy\sell\economy\ProviderManager;
 use zephy\sell\items\SaleableFactory;
 use zephy\sell\utils\MessageUtils;
 use zephy\sell\utils\PermissionUtils;
-use zephy\sell\utils\Utils;
 
 class HandSubCommand extends BaseSubCommand
 {

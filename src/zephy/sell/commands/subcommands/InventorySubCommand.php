@@ -5,7 +5,7 @@ namespace zephy\sell\commands\subcommands;
 use CortexPE\Commando\BaseSubCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
-use zephy\menu\utils\SoundUtils;
+use zephy\sell\utils\SoundUtils;
 use zephy\sell\economy\ProviderManager;
 use zephy\sell\items\SaleableFactory;
 use zephy\sell\utils\MessageUtils;
