@@ -17,7 +17,7 @@ final class ProviderManager
         reset as private;
     }
 
-    private array $economy;
+    private string $economy = " ";
     private array $defaultTypes = [
         "economy-api",
         "bedrock_economy"
@@ -25,8 +25,8 @@ final class ProviderManager
 
     public function setEconomy(string $economy): void
     {
-        $this->isDependencyEnabled();
         $this->economy = $economy;
+        $this->isDependencyEnabled();
     }
 
     public function isDependencyEnabled(): void
@@ -34,12 +34,11 @@ final class ProviderManager
         if(!in_array($this->economy, $this->defaultTypes)) {
             throw new PluginException($this->economy . " is not a economy plugin");
         }
-        if (is_null(Server::getInstance()->getPluginManager()->getPlugin("BedrockEconomy")) or is_null(Server::getInstance()->getPluginManager()->getPlugin("BedrockEconomy"))) {
-            throw new PluginException("EconomyDependency Plugin Not Found");
+
+        if(is_null($this->getEconomy()->isEnabled())) {
+            throw new PluginException($this->getEconomy()->getName() . " Plugin not found");
         }
     }
-
-    # sugerencias?
 
     public function getEconomy(): Provider
     {

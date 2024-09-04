@@ -2,7 +2,6 @@
 
 namespace zephy\sell\items;
 
-use Exception;
 use pocketmine\item\Item;
 use pocketmine\item\StringToItemParser;
 use pocketmine\utils\Config;
@@ -19,6 +18,13 @@ final class SaleableFactory
     }
 
     private array $items = [];
+
+    private Config $config;
+
+    public function __construct()
+    {
+        $this->config = new Config(Loader::getInstance()->getDataFolder() . "data.json", Config::JSON);
+    }
 
     public function getItems(): array
     {
@@ -42,16 +48,16 @@ final class SaleableFactory
 
     public function save(): void
     {
-        $config = new Config(Loader::getInstance()->getDataFolder() . "data.json", Config::JSON);
         foreach ($this->getItems() as $name => $item) {
-            $config->set($name, $item->save());
-            $config->save();
+            $this->config->set($name, $item->save());  
         }
+
+        $this->config->save();
     }
     public function load(): void
     {
-        $config = new Config(Loader::getInstance()->getDataFolder() . "data.json", Config::JSON);
-        foreach ($config->getAll() as $item => $data) {
+
+        foreach ($this->config->getAll() as $item => $data) {
             $item = StringToItemParser::getInstance()->parse($item);
 
             if (is_null($item)) {

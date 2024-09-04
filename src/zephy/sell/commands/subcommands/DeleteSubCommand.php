@@ -5,6 +5,8 @@ namespace zephy\sell\commands\subcommands;
 use CortexPE\Commando\args\RawStringArgument;
 use CortexPE\Commando\BaseSubCommand;
 use pocketmine\command\CommandSender;
+use pocketmine\player\Player;
+use zephy\menu\utils\SoundUtils;
 use zephy\sell\items\SaleableFactory;
 use zephy\sell\utils\MessageUtils;
 use zephy\sell\utils\PermissionUtils;
@@ -19,25 +21,25 @@ class DeleteSubCommand extends BaseSubCommand
 
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
-        if (!isset($args["identifier"])) {
-            $sender->sendMessage(MessageUtils::formatMessage(MessageUtils::getMessage()->get("invalids-arguments-delete")));
+        if (!$sender instanceof Player) return;
+
+        $inventory = $sender->getInventory();
+
+        if ($inventory->getItemInHand()->isNull()) {
+            $sender->sendMessage(MessageUtils::formatMessage(MessageUtils::getMessage()->get("error-item-hand")));
+            SoundUtils::playSound($sender, MessageUtils::getMessage()->get("error-sound"));
+
             return;
         }
 
-        if (is_null(SaleableFactory::getInstance()->getItem($args["identifier"]))) {
-            $sender->sendMessage(MessageUtils::formatMessage(MessageUtils::getMessage()->get("error-not-saleable")));
-            return;
-        }
-
-        SaleableFactory::getInstance()->destroy($args["identifier"]);
+        SaleableFactory::getInstance()->destroy($inventory->getItemInHand()->getVanillaName());
         $sender->sendMessage(MessageUtils::formatMessage(MessageUtils::getMessage()->get("success-item-deleted"), [
-            "{ITEM}" => $args["identifier"]
+            "{ITEM}" => $inventory->getItemInHand()->getVanillaName()
         ]));
+
+        SoundUtils::playSound($sender, MessageUtils::getMessage()->get("success-sound"));
         return;
     }
 
-    protected function prepare(): void
-    {
-        $this->registerArgument(0, new RawStringArgument("identifier"));
-    }
+    protected function prepare(): void {}
 }

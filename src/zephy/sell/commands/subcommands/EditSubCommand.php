@@ -6,6 +6,7 @@ use CortexPE\Commando\args\IntegerArgument;
 use CortexPE\Commando\BaseSubCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
+use zephy\menu\utils\SoundUtils;
 use zephy\sell\items\SaleableFactory;
 use zephy\sell\utils\MessageUtils;
 use zephy\sell\utils\PermissionUtils;
@@ -22,20 +23,17 @@ class EditSubCommand extends BaseSubCommand
     {
         if (!$sender instanceof Player) return;
 
-        if (!isset($args["price"])) {
-            $sender->sendMessage(MessageUtils::formatMessage(MessageUtils::getMessage()->get("invalids-arguments-create")));
-            return;
-        }
-
         $inventory = $sender->getInventory();
 
         if ($inventory->getItemInHand()->isNull()) {
             $sender->sendMessage(MessageUtils::formatMessage(MessageUtils::getMessage()->get("error-item-hand")));
+            SoundUtils::playSound($sender, MessageUtils::getMessage()->get("error-sound"));
             return;
         }
         $item = clone $inventory->getItemInHand();
         if (SaleableFactory::getInstance()->getItem($item->getVanillaName()) === null) {
             $sender->sendMessage(MessageUtils::formatMessage(MessageUtils::getMessage()->get("error-not-saleable")));
+            SoundUtils::playSound($sender, MessageUtils::getMessage()->get("error-sound"));
             return;
         }
 
@@ -46,6 +44,7 @@ class EditSubCommand extends BaseSubCommand
             "{ITEM}" => $item->getVanillaName(),
             "{PRICE}" => $saleable->getPrice()
         ]));
+        SoundUtils::playSound($sender, MessageUtils::getMessage()->get("success-sound"));
         return;
     }
 
