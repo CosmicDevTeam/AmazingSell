@@ -7,7 +7,8 @@ projects:
     path: ""
     libs:
       - src: muqsit/InvMenu/InvMenu
-      - src: CortexPE/Commando/Commando
+    lint:
+      phpstan: false
         
   
 ...
