@@ -44,7 +44,7 @@ final class SaleableFactory
 
     public function destroy(string $item): void
     {
-        unset($this->items[array_search($item, $this->items)]);
+        unset($this->items[$item]);
     }
 
     public function save(): void
