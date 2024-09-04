@@ -23,6 +23,7 @@ class Loader extends PluginBase
         if(!PacketHooker::isRegistered()) {
             PacketHooker::register($this);
         }
+
         Server::getInstance()->getCommandMap()->register("AmazingSell", new SellCommand);
 
         $this->saveResource("messages.yml");

@@ -4,6 +4,7 @@ namespace zephy\sell\items;
 
 use pocketmine\item\Item;
 use pocketmine\item\StringToItemParser;
+use pocketmine\Server;
 use pocketmine\utils\Config;
 use pocketmine\utils\SingletonTrait;
 use UnexpectedValueException;
@@ -48,8 +49,9 @@ final class SaleableFactory
 
     public function save(): void
     {
-        foreach ($this->getItems() as $name => $item) {
-            $this->config->set($name, $item->save());  
+        foreach ($this->getItems() as $item) {
+            $name = StringToItemParser::getInstance()->lookupAliases($item->getItem())[0];
+            $this->config->set($name, $item->save());
         }
 
         $this->config->save();
